@@ -68,8 +68,8 @@
 
 		}
 			
-			camera.rotation.set( Math.PI/2,0, Math.PI/2,'ZXY' );
-		
+			
+		camera.rotation.set( Math.PI/2,0,  Math.PI/2,'ZXY' );
 		window.addEventListener( "deviceorientation", deviceOrientation, true);
 
 			// функция, която търкаля топката според наклона на устройството
@@ -79,7 +79,7 @@
 			 beta = THREE.Math.degToRad( event.beta ),
 			 gamma = THREE.Math.degToRad( event.gamma );
 					
-			camera.rotation.set( beta,0, alpha,'ZXY' );
+			scene.rotation.set( beta,0, alpha,'ZXY' );
 		}
 			
 		</script>
