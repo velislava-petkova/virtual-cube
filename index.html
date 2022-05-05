@@ -79,7 +79,8 @@
 			 beta = THREE.Math.degToRad( event.beta ),
 			 gamma = THREE.Math.degToRad( event.gamma );
 					
-			//scene.rotation.set( beta,0, alpha,'ZXY' );
+			//scene.rotation.set( beta, alpha, -gamma, 'YXZ' );
+			scene.rotation.set( beta,Math.PI, Math.PI/2'ZXY' );
 		}
 			
 		</script>
