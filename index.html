@@ -73,11 +73,11 @@
 			// функция, която търкаля топката според наклона на устройството
 		function deviceOrientation( event )
 		{
-			var alpha = THREE.Math.degToRad( event.alpha ),
-			//	beta = THREE.Math.degToRad( event.beta ),
-				//gamma = THREE.Math.degToRad( event.gamma );
+			//var alpha = THREE.Math.degToRad( event.alpha ),
+			beta = THREE.Math.degToRad( event.beta ),
+			gamma = THREE.Math.degToRad( event.gamma );
 					
-			camera.rotation.set( Math.PI/2,0,0 );
+			camera.rotation.set( beta,gamma,Math.PI/2,'ZXY' );
 		}
 			
 		</script>
