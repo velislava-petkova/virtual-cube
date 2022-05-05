@@ -68,11 +68,17 @@
 
 		}
 		
-		
-		function animate(t)
+		window.addEventListener( "deviceorientation", deviceOrientation, true);
+
+			// функция, която търкаля топката според наклона на устройството
+		function deviceOrientation( event )
 		{
-			camera.rotation.set( t/2,t/2,0 );
-		}		
+			var alpha = THREE.Math.degToRad( event.alpha ),
+				beta = THREE.Math.degToRad( event.beta ),
+				gamma = THREE.Math.degToRad( event.gamma );
+					
+			smartphone.rotation.set( beta, alpha, -gamma, 'YXZ' );
+		}
 			
 		</script>
 	</body>
