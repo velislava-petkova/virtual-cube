@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Домашно 3</title>
+		<meta charset="utf-8">
+			
+		<script src="three.min.js"></script>
+		<script src="vax.js"></script>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		
+	</head>
+	
+	<body>		
+		<script>
+		vaxInit();
+		
+		camera.position.set( 0, 0, 0 );
+		light.position.set( 0, -20, 20 );
+		light.intensity=0.25;
+		
+		var light2=light.clone();
+		light2.position.set( 0, 20, 20 );
+
+		var light3=light.clone();
+		light3.position.set( 0, 20, -20 );
+
+		var light4=light.clone();
+		light4.position.set( 0, -20, -20 );
+		scene.add(light2, light3, light4);
+		
+		var cubeSize=50;
+		
+		var cubeGeom = new THREE.BoxGeometry(cubeSize, cubeSize,cubeSize);
+		var cubeMaterial = new THREE.MeshPhongMaterial({
+			color: '#d3ff75',
+			side: THREE.DoubleSide,
+			shininess: 0});
+		var cube = new THREE.Mesh(cubeGeom, cubeMaterial);
+		
+		scene.add(cube);
+
+		
+		var coneCount=6*200;
+		var m=23;
+		var currentside=0;
+			
+		for(var i=0; i<coneCount; i++){
+
+			var geometry = new THREE.ConeGeometry( 0.5, 2, 10 );
+			var material = new THREE.MeshLambertMaterial( {
+				color: new THREE.Color(Math.random(),Math.random(),Math.random())
+			} );
+
+			var cone=new THREE.Mesh(geometry,material);
+			cone.position.set(THREE.Math.randFloat(-m,m),THREE.Math.randFloat(-m,m),THREE.Math.randFloat(-m,m));
+				
+			scene.add(cone);		
+
+			if (i%(coneCount/6)==0) currentside++;
+
+			if (currentside==1) cone.position.x=m;
+			else if (currentside==2) cone.position.y=m;
+			else if (currentside==3) cone.position.z=m;
+			else if (currentside==4) cone.position.x=-m;
+			else if (currentside==5) cone.position.y=-m;
+			else cone.position.z=-m;
+
+		}
+		
+		
+		function animate(t)
+		{
+			camera.rotation.set( t/2,t/2,0 );
+		}		
+			
+		</script>
+	</body>
+</html>
