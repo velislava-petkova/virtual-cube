@@ -74,10 +74,10 @@
 		function deviceOrientation( event )
 		{
 			var alpha = THREE.Math.degToRad( event.alpha ),
-				beta = THREE.Math.degToRad( event.beta ),
-				gamma = THREE.Math.degToRad( event.gamma );
+			//	beta = THREE.Math.degToRad( event.beta ),
+				//gamma = THREE.Math.degToRad( event.gamma );
 					
-			camera.rotation.set( beta, alpha, -gamma, 'YXZ' );
+			camera.rotation.set( alpha,0,0 );
 		}
 			
 		</script>
