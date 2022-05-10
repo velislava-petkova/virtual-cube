@@ -33,7 +33,7 @@ function vaxInit()
 {
 	renderer = new THREE.WebGLRenderer( {antialias: true} );
 	document.body.appendChild( renderer.domElement );
-//	document.body.style.margin = 0;
+	document.body.style.margin = 0;
 	document.body.style.overflow = 'hidden';
 	
 	// включва статистика, само ако е дефиниран Stats
