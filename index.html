@@ -82,8 +82,17 @@
 					
 			camera.rotation.set( beta, alpha, -gamma, 'YXZ' );
 			//scene.rotation.set( 0,0, 0);
+			
+			document.getElementById('alpha').innerHTML = event.alpha;
+				document.getElementById('beta').innerHTML = event.beta;
+				document.getElementById('gamma').innerHTML = event.gamma;
 		}
 			
 		</script>
+		<h3>alpha = <span id="alpha"></span></h3>
+		<h3>beta = <span id="beta"></span></h3>
+		<h3>gamma = <span id="gamma"></span></h3>
+		<h3>absolute = <span id="absolute"></span></h3>
+
 	</body>
 </html>
