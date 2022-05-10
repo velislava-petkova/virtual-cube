@@ -68,7 +68,13 @@
 
 		}
 			
-	
+		function calculateGamma( gamma ){
+			
+			if (gamma<0)return -gamma-Math.PI/2;
+			else return -gamma+Math.PI/2;
+			
+		
+		}
 		window.addEventListener( "deviceorientation", deviceOrientation, true);
 
 	
