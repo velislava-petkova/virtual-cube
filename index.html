@@ -68,7 +68,7 @@
 
 		}
 			
-		camera.rotation.x=Math.PI/2;
+		//camera.rotation.x=Math.PI/2;
 		//	camera.rotation.z=Math.PI/2;
 	//	scene.rotation.set( Math.PI/2,0,  0,'ZXY' );
 		window.addEventListener( "deviceorientation", deviceOrientation, true);
@@ -77,10 +77,10 @@
 		function deviceOrientation( event )
 		{
 			var alpha = THREE.Math.degToRad( event.alpha ),
-			// beta = THREE.Math.degToRad( event.beta ),
+			 beta = THREE.Math.degToRad( event.beta ),
 			 gamma = THREE.Math.degToRad( event.gamma );
 					
-			scene.rotation.set( 0, gamma, alpha, 'YXZ' );
+			camera.rotation.set( beta, alpha, -gamma, 'YXZ' );
 			//scene.rotation.set( 0,0, 0);
 		}
 			
