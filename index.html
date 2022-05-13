@@ -2,92 +2,100 @@
 
 <html>
 	<head>
-		<title>Домашно 3</title>
+		<title>VRAR cube - 62428</title>
 		<meta charset="utf-8">
-			
-		<script src="three.min.js"></script>
-		<script src="vax.js"></script>
+		
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		
+		<script src="three.min.js"></script>
+		<script src="vax.js"></script>
 	</head>
 	
-	<body>		
+	<body>
 		<script>
-		vaxInit();
-		
-		camera.position.set( 0, 0, 0 );
-		light.position.set( 0, -20, 20 );
-		light.intensity=0.25;
-		
-		var light2=light.clone();
-		light2.position.set( 0, 20, 20 );
-
-		var light3=light.clone();
-		light3.position.set( 0, 20, -20 );
-
-		var light4=light.clone();
-		light4.position.set( 0, -20, -20 );
-		scene.add(light2, light3, light4);
-		
-		var cubeSize=50;
-		
-		var cubeGeom = new THREE.BoxGeometry(cubeSize, cubeSize,cubeSize);
-		var cubeMaterial = new THREE.MeshPhongMaterial({
-			color: '#d3ff75',
-			side: THREE.DoubleSide,
-			shininess: 0});
-		var cube = new THREE.Mesh(cubeGeom, cubeMaterial);
-		
-		scene.add(cube);
-
-		
-		var coneCount=6*200;
-		var m=23;
-		var currentside=0;
+			vaxInitParallax();
 			
-		for(var i=0; i<coneCount; i++){
-
-			var geometry = new THREE.ConeGeometry( 0.5, 2, 10 );
-			var material = new THREE.MeshLambertMaterial( {
-				color: new THREE.Color(Math.random(),Math.random(),Math.random())
-			} );
-
-			var cone=new THREE.Mesh(geometry,material);
-			cone.position.set(THREE.Math.randFloat(-m,m),THREE.Math.randFloat(-m,m),THREE.Math.randFloat(-m,m));
-				
-			scene.add(cone);		
-
-			if (i%(coneCount/6)==0) currentside++;
-
-			if (currentside==1) cone.position.x=m;
-			else if (currentside==2) cone.position.y=m;
-			else if (currentside==3) cone.position.z=m;
-			else if (currentside==4) cone.position.x=-m;
-			else if (currentside==5) cone.position.y=-m;
-			else cone.position.z=-m;
-
-		}
+			/*
 			
-		function calculateGamma( gamma ){
+			Трябва да телефонът да е на пейзажна ориентация и да е изключено автоматичното завъртане.
 			
-			if (gamma<0)return -gamma-Math.PI/2;
-			else return -gamma+Math.PI/2;
+			*/
 			
-		
-		}
-		window.addEventListener( "deviceorientation", deviceOrientation, true);
-
+			camera.fov = 50;
+			onWindowResize();
 	
-		function deviceOrientation( event )
-		{
-			var alpha = THREE.Math.degToRad( event.alpha ),
-			beta = THREE.Math.degToRad( event.beta ),
-			gamma = THREE.Math.degToRad( event.gamma );
+			scene.background = new THREE.CubeTextureLoader().load( [
+				'posx.jpg', 'negx.jpg',
+				'posy.jpg', 'negy.jpg',
+				'posz.jpg', 'negz.jpg' ]);
+		
+		
+			const textureCube = new THREE.CubeTextureLoader().load([
+				'posx.jpg', 'negx.jpg',
+				'posy.jpg', 'negy.jpg',
+				'posz.jpg', 'negz.jpg' ]);
 				
+			textureCube.mapping = THREE.CubeRefractionMapping;
+								
+			var geometry = new THREE.DodecahedronGeometry( 1 );
+			var material = new THREE.MeshBasicMaterial( {
+				color: 0xffffff,
+				envMap: textureCube, 
+				refractionRatio: 0.95 } );
+
+			
+			var n = 200;
+			var crystals=[];
 				
-			camera.rotation.set( calculateGamma( gamma ), alpha, 0, 'YXZ' );
-	
-		}
+			for( var i=0; i<n; i++)
+			{
+				crystal = new THREE.Mesh( geometry, material );
+				crystal.scale.set( 50, 50, 50 );
+				
+				var r = THREE.Math.randFloat(700,2000),
+					a = THREE.Math.randFloat(0,2*Math.PI),
+					b = THREE.Math.randFloat(Math.PI/4,Math.PI/1.8);
+				crystal.position.setFromSphericalCoords( r, b, a );
+				
+				crystals.push(crystal);
+				scene.add( crystal );
+			}
+		
+			window.addEventListener( "deviceorientation", deviceOrientation, true);
+
+			function animate( t ){
+						
+				for( var i=0; i<n; i++){
+				crystals[i].rotation.set(0,t/3,0);
+				}
+			}		
+					
+					
+			function deviceOrientation( event ){
+						
+				var alpha = event.alpha,
+					gamma = event.gamma;
+
+				if( alpha === null ) return;
+				
+				if( gamma>=0 )
+					gamma = 90-gamma;
+				else
+				{
+					alpha = alpha+180;
+					gamma = -90-gamma;
+				}
+									
+				alpha = THREE.Math.degToRad( alpha );
+				gamma = THREE.Math.degToRad( gamma );
+						
+				camera.rotation.set( gamma, alpha, 0, 'YXZ' );
+			
+			}
+			
 		</script>
+		
 	</body>
 </html>
+
+
